@@ -1058,7 +1058,7 @@ Your output must be valid JSON only. No additional text.""",
                     # Fetch all users (or handle single user case)
                     # For now, assuming single user for simplicity, adapt if multi-user support needed
                     user_id = "default" # Replace with actual user ID logic if needed
-                    user_obj = Users.get_user_by_id(user_id)
+                    user_obj = await Users.get_user_by_id(user_id)
                     if not user_obj:
                         logger.warning(f"Summarization skipped: User '{user_id}' not found.")
                         continue
@@ -1814,7 +1814,7 @@ Your output must be valid JSON only. No additional text.""",
         memories_list = []
         try:
             # Get memories using Memories.get_memories_by_user_id
-            user_memories = Memories.get_memories_by_user_id(user_id=str(user_id))
+            user_memories = await Memories.get_memories_by_user_id(user_id=str(user_id))
 
             if user_memories:
                 for memory in user_memories:
@@ -1992,7 +1992,7 @@ Your output must be valid JSON only. No additional text.""",
         # Get user valves
         user_valves = None
         try:
-            user = Users.get_user_by_id(user_id)
+            user = await Users.get_user_by_id(user_id)
             user_valves = self._get_user_valves(user)
 
             # Debug logging for user valves
@@ -3353,7 +3353,7 @@ Current datetime: {current_datetime.strftime('%A, %B %d, %Y %H:%M:%S')} ({curren
         """Process memory operations"""
         successfully_saved_ops = []
         try:
-            user = Users.get_user_by_id(user_id)
+            user = await Users.get_user_by_id(user_id)
             if not user:
                 logger.error(f"User not found: {user_id}")
                 return []
